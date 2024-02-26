@@ -1,4 +1,4 @@
-package com.pfe.authsecurity;
+package com.pfe.BabySitterPFE;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AuthsecurityApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(AuthsecurityApplication.class, args);
+
 	}
 
 }
