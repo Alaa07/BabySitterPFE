@@ -16,12 +16,11 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id_post;
-    private Date date;
-    private Date startTime;
-    private Date endTime;
-    private String location;
-    private String specific_needs;
-    private Float budget;
+    //  @NaturalId(mutable = true)
+    private String subject;
+    private String content;
+    private Date publicationDate;
+    private  String user;
 
     @ManyToOne
     @JoinColumn(name = "id_parent")

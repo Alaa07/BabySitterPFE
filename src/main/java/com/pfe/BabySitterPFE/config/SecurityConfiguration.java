@@ -14,8 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import static com.pfe.BabySitterPFE.entities.Permission.*;
-import static com.pfe.BabySitterPFE.entities.Role.ADMIN;
-import static com.pfe.BabySitterPFE.entities.Role.BABYSITTER;
+import static com.pfe.BabySitterPFE.entities.Role.*;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -25,8 +24,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    private static final String[] WHITE_LIST_URL = {"/auth/**",
-            "/v2/api-docs",
+    private static final String[] WHITE_LIST_URL =
+            {"/auth/**",
+            "/posts/**",
             "/v3/api-docs",
             "/v3/api-docs/**",
             "/swagger-resources",
@@ -47,11 +47,16 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/babySitter/**").hasAnyRole(ADMIN.name(), BABYSITTER.name())
-                                .requestMatchers(GET, "/babySitter/**").hasAnyAuthority(ADMIN_READ.name(), BABYSITTER_READ.name())
-                                .requestMatchers(POST, "/babySitter/**").hasAnyAuthority(ADMIN_CREATE.name(), BABYSITTER_CREATE.name())
-                                .requestMatchers(PUT, "/babySitter/**").hasAnyAuthority(ADMIN_UPDATE.name(), BABYSITTER_UPDATE.name())
-                                .requestMatchers(DELETE, "/babySitter/**").hasAnyAuthority(ADMIN_DELETE.name(), BABYSITTER_DELETE.name())
+                                .requestMatchers("/auth/**").hasAnyRole(ADMIN.name(), BABYSITTER.name())
+                                .requestMatchers(GET, "/auth/**").hasAnyAuthority(PARENT.name(), BABYSITTER_READ.name())
+                                .requestMatchers(POST, "/auth/**").hasAnyAuthority(PARENT_CREATE.name(), BABYSITTER_CREATE.name())
+                                .requestMatchers(PUT, "/auth/**").hasAnyAuthority(PARENT_UPDATE.name(), BABYSITTER_UPDATE.name())
+                                .requestMatchers(DELETE, "/auth/**").hasAnyAuthority(PARENT_DELETE.name(), BABYSITTER_DELETE.name())
+                                .requestMatchers("/posts/**").hasAnyRole(ADMIN.name(), BABYSITTER.name())
+                                .requestMatchers(GET, "/posts/**").hasAnyAuthority(PARENT.name(), BABYSITTER_READ.name())
+                                .requestMatchers(POST, "/posts/**").hasAnyAuthority(PARENT_CREATE.name(), BABYSITTER_CREATE.name())
+                                .requestMatchers(PUT, "/posts/**").hasAnyAuthority(PARENT_UPDATE.name(), BABYSITTER_UPDATE.name())
+                                .requestMatchers(DELETE, "/posts/**").hasAnyAuthority(PARENT_DELETE.name(), BABYSITTER_DELETE.name())
                                 .anyRequest()
                                 .authenticated()
                 )
