@@ -2,10 +2,7 @@ package com.pfe.BabySitterPFE.auth;
 
 import com.pfe.BabySitterPFE.role.RoleRepository;
 import com.pfe.BabySitterPFE.security.JwtService;
-import com.pfe.BabySitterPFE.user.Token;
-import com.pfe.BabySitterPFE.user.TokenRepository;
-import com.pfe.BabySitterPFE.user.User;
-import com.pfe.BabySitterPFE.user.UserRepository;
+import com.pfe.BabySitterPFE.user.*;
 
 import lombok.RequiredArgsConstructor;
 
@@ -89,10 +86,18 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+        saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder().token(jwtToken).build();
 
     }
-
+    private void saveUserToken(User user, String jwtToken) {
+        var token = Token.builder()
+                .user(user)
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .build();
+        tokenRepository.save(token);
+    }
 
 
 

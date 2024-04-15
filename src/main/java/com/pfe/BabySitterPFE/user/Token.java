@@ -16,6 +16,9 @@ public class Token {
     @GeneratedValue
     private Integer id;
     private String token;
+    @Enumerated(EnumType.STRING)
+    public TokenType tokenType = TokenType.BEARER;
+
 
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
