@@ -1,18 +1,16 @@
 package com.pfe.BabySitterPFE;
 
-import com.pfe.BabySitterPFE.role.Role;
-import com.pfe.BabySitterPFE.role.RoleRepository;
-import org.springframework.boot.CommandLineRunner;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication
-@EnableJpaAuditing
-public class AuthsecurityApplication {
 
-	public static void main(String[] args) {SpringApplication.run(AuthsecurityApplication.class, args);}
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+
+public class SafeCareApplication {
+
+	public static void main(String[] args) {SpringApplication.run(SafeCareApplication.class, args);}
 		/*@Bean
 		public CommandLineRunner runner(RoleRepository roleRepository){
 			return args -> {
